@@ -521,6 +521,10 @@ fun match_hw_obs_model hw_obs_model =
         "cache_multiw_subset_page_boundary"
       | _ => raise ERR "match_hw_obs_model" ("unknown hw_obs_model: " ^ (PolyML.makestring hw_obs_model));
 
+fun a_test_fun x =
+  case x of
+    0 => ();
+
 fun scamv_run { max_iter = m, prog_size = sz, max_tests = tests, enumerate = enumerate
               , generator = gen, generator_param = generator_param
               , obs_model = obs_model, hw_obs_model = hw_obs_model
@@ -572,7 +576,8 @@ fun scamv_run { max_iter = m, prog_size = sz, max_tests = tests, enumerate = enu
          |  main_loop n =
             (printv 1 ("Iteration: " ^ PolyML.makestring (m - n) ^ "\n");
              ((handle_locinfo print (fn () =>
-              let val prog = prog_store_fun ()
+              let val prog = prog_store_fun ();
+val _ = a_test_fun 1;
               in
                 scamv_test_main tests prog
                 handle e => (run_log_prog (skipProgExText e); PolyML.Exception.reraise e)
